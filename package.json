@@ -1,0 +1,28 @@
+{
+    "name": "bufs"
+  , "version": "0.0.0"
+  , "description": "Buffer collection utilities."
+  , "author": "Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)"
+  , "license": "MIT"
+  , "keywords": [
+        "buffer"
+      , "buffers"
+    ]
+  , "repository": {
+        "type": "git"
+      , "url": "git@github.com:logicalparadox/bufs.git"
+    }
+  , "engines": {
+      "node": "*"
+    }
+  , "main": "./index"
+  , "scripts": {
+      "test": "make test"
+    }
+  , "dependencies": {
+    }
+  , "devDependencies": {
+        "chai": "*"
+      , "mocha": "*"
+    }
+}

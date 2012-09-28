@@ -1,6 +1,6 @@
 {
     "name": "bufs"
-  , "version": "0.0.0"
+  , "version": "0.0.1"
   , "description": "Buffer collection utilities."
   , "author": "Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)"
   , "license": "MIT"

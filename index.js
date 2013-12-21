@@ -8,8 +8,8 @@
  * External dependancies
  */
 
-var EventEmitter = require('events').EventEmitter
-  , util = require('util');
+var EventEmitter = require('events').EventEmitter;
+var inherits = require('util').inherits;
 
 /*!
  * Primary Export
@@ -23,7 +23,8 @@ module.exports = Buffers;
  *
  */
 
-function Buffers () {
+function Buffers() {
+  if (!(this instanceof Buffers)) return new Buffers();
   EventEmitter.call(this);
   this.buffers = [];
 }
@@ -32,7 +33,7 @@ function Buffers () {
  * Inherits from EventEmitter
  */
 
-util.inherits(Buffers, EventEmitter);
+inherits(Buffers, EventEmitter);
 
 /**
  * #### .length
@@ -44,12 +45,12 @@ util.inherits(Buffers, EventEmitter);
  * @api public
  */
 
-Object.defineProperty(Buffers.prototype, 'length',
-  { get: function () {
-      return this.buffers.reduce(function (s, buf) {
-        return s + buf.length;
-      }, 0);
-    }
+Object.defineProperty(Buffers.prototype, 'length', {
+  get: function() {
+    return this.buffers.reduce(function(s, buf) {
+      return s + buf.length;
+    }, 0);
+  }
 });
 
 /**
@@ -66,7 +67,7 @@ Object.defineProperty(Buffers.prototype, 'length',
  * @api public
  */
 
-Buffers.prototype.push = function () {
+Buffers.prototype.push = function() {
   for (var i = 0; i < arguments.length; i++) {
     var buf = arguments[i];
     this.buffers.push(buf);
@@ -91,26 +92,22 @@ Buffers.prototype.push = function () {
  * @api public
  */
 
-Buffers.prototype.slice = function (a, b) {
+Buffers.prototype.slice = function(a, b) {
   // sane defaults
   if (undefined === a) a = 0;
   if (undefined === b) b = this.length;
   if (b > this.length) b = this.length;
 
-  var bufs = this.buffers
-    , pos = 0
-    , res = new Buffer(b - a)
-    , start = findStart(bufs, a);
+  var bufs = this.buffers;
+  var pos = 0;
+  var res = new Buffer(b - a);
+  var start = findStart(bufs, a);
 
   // extract needed buffer parts
   for (var x = start.i; pos < b - a && x < bufs.length; x++) {
-    var len = bufs[x].length
-      , from = pos === 0
-        ? a - start.bytes
-        : 0
-      , to = pos + len >= b - a
-        ? Math.min(from + (b - a) - pos, len)
-        : len;
+    var len = bufs[x].length;
+    var from = pos === 0 ? a - start.bytes : 0;
+    var to = pos + len >= b - a ? Math.min(from + (b - a) - pos, len) : len;
     bufs[x].copy(res, pos, from, to);
     pos += to - from;
   }
@@ -132,14 +129,12 @@ Buffers.prototype.slice = function (a, b) {
  * @api public
  */
 
-Buffers.prototype.splice = function (a, b) {
-  var bufs = this.buffers
-    , ind = a < 0
-      ? this.length - a
-      : a
-    , res = new Buffers()
-    , start = findStart(bufs, a)
-    , pos = 0;
+Buffers.prototype.splice = function(a, b) {
+  var bufs = this.buffers;
+  var ind = a < 0 ? this.length - a : a;
+  var res = new Buffers();
+  var start = findStart(bufs, a);
+  var pos = 0;
 
   // sane default
   if (undefined === b || b > this.length - ind) {
@@ -148,14 +143,10 @@ Buffers.prototype.splice = function (a, b) {
 
   // begin extraction
   for (var x = start.i; pos < b && x < bufs.length; x++) {
-    var len = bufs[x].length
-      , from = pos === 0
-        ? ind - start.bytes
-        : 0
-      , to = pos + len >= b
-        ? Math.min(from + b - pos, len)
-        : len
-      , buf = bufs[x].slice(from, to)
+    var len = bufs[x].length;
+    var from = pos === 0 ? ind - start.bytes : 0;
+    var to = pos + len >= b ? Math.min(from + b - pos, len) : len;
+    var buf = bufs[x].slice(from, to);
 
     // handle removal
     if (from > 0 && to === len) {
@@ -196,7 +187,7 @@ Buffers.prototype.splice = function (a, b) {
  * @api private
  */
 
-function findStart (bufs, a) {
+function findStart(bufs, a) {
   var start = 0;
 
   for (var i = 0; i < bufs.length && start + bufs[i].length <= a; i++) {
@@ -217,7 +208,7 @@ function findStart (bufs, a) {
  * @api public
  */
 
-Buffers.prototype.at = function (n) {
+Buffers.prototype.at = function(n) {
   var bufs = this.slice();
   return bufs[n];
 };

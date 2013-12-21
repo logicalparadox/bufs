@@ -1,28 +1,27 @@
 {
-    "name": "bufs"
-  , "version": "0.0.1"
-  , "description": "Buffer collection utilities."
-  , "author": "Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)"
-  , "license": "MIT"
-  , "keywords": [
-        "buffer"
-      , "buffers"
-    ]
-  , "repository": {
-        "type": "git"
-      , "url": "git@github.com:logicalparadox/bufs.git"
-    }
-  , "engines": {
-      "node": "*"
-    }
-  , "main": "./index"
-  , "scripts": {
-      "test": "make test"
-    }
-  , "dependencies": {
-    }
-  , "devDependencies": {
-        "chai": "*"
-      , "mocha": "*"
-    }
+  "name": "bufs",
+  "version": "0.0.1",
+  "description": "Buffer collection utilities.",
+  "author": "Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)",
+  "license": "MIT",
+  "keywords": [
+    "buffer",
+    "buffers"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:logicalparadox/bufs.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "main": "./index",
+  "scripts": {
+    "test": "node_modules/goodwin/bin/goodwin",
+    "test-travis": "GOODWIN_ENV=travis npm test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "goodwin": "https://github.com/logicalparadox/goodwin/tarball/master"
+  }
 }
